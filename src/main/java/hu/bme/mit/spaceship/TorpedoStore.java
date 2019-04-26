@@ -17,7 +17,7 @@ public class TorpedoStore {
 
 
 	
-	Random generator = new Random();
+	private Random generator = new Random();
 
 
 
