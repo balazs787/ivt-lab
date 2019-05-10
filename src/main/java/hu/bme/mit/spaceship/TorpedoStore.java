@@ -16,12 +16,12 @@ public class TorpedoStore {
 
   Random generator = new Random();
 
-  public TorpedoStore(int numberOfTorpedos){
+  public TorpedoStore(int numberOfTorpedos) {
     this.torpedoCount = numberOfTorpedos;
 
     // update failure rate if it was specified in an environment variable
     String failureEnv = System.getenv("IVT_RATE");
-    if (failureEnv != null){
+    if (failureEnv != null) {
       try {
         FAILURE_RATE = Double.parseDouble(failureEnv);
       } catch (NumberFormatException nfe) {
@@ -30,36 +30,40 @@ public class TorpedoStore {
     }
   }
 
-  public boolean fire(int numberOfTorpedos){
-    if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
-	throw{
-      new IllegalArgumentException("numberOfTorpedos");
-	}
+  public boolean fire(int numberOfTorpedos) {
+    if (numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount) {
+      ;
     }
 
-    boolean success = false;
 
-    // simulate random overheating of the launcher bay which prevents firing
-    
-    double r = generator.nextDouble();
+      boolean success = false;
 
-    if (r >= FAILURE_RATE) {
-      // successful firing
-      this.torpedoCount -= numberOfTorpedos;
-      success = true;
-    } else {
-      // simulated failure
-      success = false;
+      // simulate random overheating of the launcher bay which prevents firing
+
+      double r = generator.nextDouble();
+
+      if (r >= FAILURE_RATE) {
+        // successful firing
+        this.torpedoCount -= numberOfTorpedos;
+        success = true;
+      } else {
+        // simulated failure
+        success = false;
+      }
+
+
+      return success;
     }
 
-    return success;
+
+    public boolean isEmpty(){
+      return this.torpedoCount <= 0;
+    }
+
+
+
+    public int getTorpedoCount(){
+      return this.torpedoCount;
+    }
   }
 
-  public boolean isEmpty(){
-    return this.torpedoCount <= 0;
-  }
-
-  public int getTorpedoCount() {
-    return this.torpedoCount;
-  }
-}
